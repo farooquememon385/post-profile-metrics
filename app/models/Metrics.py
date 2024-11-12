@@ -16,21 +16,19 @@ class Metrics(Base):
     followers = Column(Integer)
     emv = Column(Float)  # Earned Media Value (EMV)
     active_reach = Column(Float)
+    content_type = Column(String) # Organic or Paid if containe @ or ailan
+    post_count = Column(Integer)
 
     # Average metrics for the last 3 months
-    engagements = Column(Float)  # Average Engagements
-    video_views = Column(Float)  # Average Video Views
-    story_reach = Column(Float)  # Average Story Reach
-    story_engagements = Column(Float)  # Average Story Engagements
-    story_views = Column(Float)  # Average Story Views
-    saves = Column(Float)  # Average Saves
-    likes = Column(Float)  # Average Likes
-    comments = Column(Float)  # Average Comments
-    shares = Column(Float)  # Average Shares
-
-    # Content type (Paid or Organic)
-    content_type = Column(String) 
-    post_count = Column(Integer)
+    engagements = Column(Float)
+    video_views = Column(Float)
+    story_reach = Column(Float)
+    story_engagements = Column(Float)
+    story_views = Column(Float)
+    saves = Column(Float)
+    likes = Column(Float)
+    comments = Column(Float)
+    shares = Column(Float)
 
     def calculate_active_reach(self, total_comments, total_likes, total_views, total_posts):
         """ Calculate active reach. """
