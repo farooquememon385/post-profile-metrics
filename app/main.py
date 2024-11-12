@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from database import init_db
 
 app = FastAPI(
     title="Post and Profile Metrics API",
@@ -8,6 +9,8 @@ app = FastAPI(
         "name": "Farooq Memon",
     }
 )
+
+init_db()
 
 @app.get("/")
 async def root():
