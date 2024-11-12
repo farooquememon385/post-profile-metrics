@@ -1,6 +1,5 @@
 from fastapi import FastAPI, Depends, UploadFile, File
-from database import init_db
-from database import get_db
+from database import init_db, get_db
 from sqlalchemy.orm import Session
 from crud import calculateMetrics, getMetricsByUsername, getAllMetrics
 
@@ -10,9 +9,8 @@ app = FastAPI(
     version="1.0.0",
     contact={
         "name": "Farooq Memon",
-    }
+    },
 )
-
 init_db()
 
 @app.get("/")

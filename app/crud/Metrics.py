@@ -20,24 +20,21 @@ async def calculateMetrics(profileFile: UploadFile, postFile: UploadFile, db: Se
     # Tackling NaN and inf cases as the csv file can have some empty fields. This replaces that with 0.
     profileDf.replace([np.inf, -np.inf, np.nan], 0, inplace=True)
     postsDF.replace([np.inf, -np.inf, np.nan], 0, inplace=True)
-    profiles = profileDf.to_dict(orient="records")
+    profileData = profileDf.to_dict(orient="records")
     postsData = postsDF.to_dict(orient="records")
 
     dateBeforeThreeMonths = datetime.now() - timedelta(days=90)
     recentPosts = [post for post in postsData if getFormattedDate(post['pub_date']) >= dateBeforeThreeMonths]
-    for profileData in profiles:
-        # Initialize controller with DB session
-        metricsController = MetricsController(db)
-    
-        await metricsController.store_metrics(recentPosts, profileData)
+    # Initialize controller with DB session
+    metricsController = MetricsController(db)
 
-        # Calculate metrics by content category
-        metrics_paid, metrics_organic = metricsController.compute_metrics_by_category(profileData,postsData)
-
-        return {
-            "metrics_paid": metrics_paid,
-            "metrics_organic": metrics_organic,
-        }
+    await metricsController.store_metrics(recentPosts, profileData)
+    # Calculate metrics by content category
+    metrics_paid, metrics_organic = metricsController.compute_metrics_by_category(profileData,postsData)
+    return {
+        "metrics_paid": metrics_paid,
+        "metrics_organic": metrics_organic,
+    }
 
 async def getMetricsByUsername(username: str, db: Session = Depends(db.get_db)):
     metricsController = MetricsController(db)

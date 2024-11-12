@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Float, String, Date, Boolean, create_engine
+from sqlalchemy import Column, Integer, Float, String
 from database import Base
 
 class Metrics(Base):
